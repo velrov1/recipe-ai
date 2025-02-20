@@ -90,6 +90,9 @@
                     <i class="fas fa-users text-indigo-600 mb-2"></i>
                     <p class="text-sm text-gray-600">Servings</p>
                     <p class="font-semibold" id="recipeServings"></p>
+                    <p class="text-xs text-gray-500" id="recipeServingSize"></p>
+                    <p class="text-xs text-gray-500" id="recipeTotalWeight"></p>
+                    <p class="text-xs text-gray-500 italic" id="recipeServingNote"></p>
                 </div>
                 <div class="text-center p-4 bg-gray-50 rounded-lg">
                     <i class="fas fa-euro-sign text-indigo-600 mb-2"></i>
@@ -153,6 +156,20 @@
                     <span id="recipeDifficulty" class="text-white px-3 py-1 rounded-full font-semibold"></span>
                 </div>
                 <p id="recipeDifficultyExplanation" class="text-gray-700 text-sm italic"></p>
+            </div>
+
+            <div id="beveragePairingsContainer" class="mt-8">
+                <h3 class="text-xl font-semibold mb-4">Beverage Pairings</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-lg font-medium mb-3 text-indigo-600">Alcoholic Pairings</h4>
+                        <ul id="alcoholicPairings" class="list-disc list-inside space-y-2 text-gray-700"></ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-medium mb-3 text-indigo-600">Non-Alcoholic Pairings</h4>
+                        <ul id="nonAlcoholicPairings" class="list-disc list-inside space-y-2 text-gray-700"></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -271,7 +288,11 @@
             function displayRecipe(recipe) {
                 document.getElementById('recipeName').textContent = recipe.name;
                 document.getElementById('recipeTime').textContent = `Prep: ${recipe.prep_time} | Cooking: ${recipe.cooking_time}`;
-                document.getElementById('recipeServings').textContent = recipe.servings;
+                // Display serving information
+                document.getElementById('recipeServings').textContent = recipe.servings.count;
+                document.getElementById('recipeServingSize').textContent = `${recipe.servings.size_per_serving} per serving`;
+                document.getElementById('recipeTotalWeight').textContent = `Total: ${recipe.servings.total_weight}`;
+                document.getElementById('recipeServingNote').textContent = recipe.servings.serving_note;
 
                 // Display difficulty level with color coding
                 const difficultyElement = document.getElementById('recipeDifficulty');
@@ -335,6 +356,27 @@
                 document.getElementById('recipeProtein').textContent = recipe.nutritional_info.protein;
                 document.getElementById('recipeCarbs').textContent = recipe.nutritional_info.carbs;
                 document.getElementById('recipeFat').textContent = recipe.nutritional_info.fat;
+
+                // Display beverage pairings
+                const alcoholicList = document.getElementById('alcoholicPairings');
+                const nonAlcoholicList = document.getElementById('nonAlcoholicPairings');
+                
+                alcoholicList.innerHTML = '';
+                nonAlcoholicList.innerHTML = '';
+                
+                if (recipe.beverage_pairings) {
+                    recipe.beverage_pairings.alcoholic.forEach(pairing => {
+                        const li = document.createElement('li');
+                        li.textContent = pairing;
+                        alcoholicList.appendChild(li);
+                    });
+                    
+                    recipe.beverage_pairings.non_alcoholic.forEach(pairing => {
+                        const li = document.createElement('li');
+                        li.textContent = pairing;
+                        nonAlcoholicList.appendChild(li);
+                    });
+                }
                 document.getElementById('recipeFiber').textContent = recipe.nutritional_info.fiber;
                 document.getElementById('recipeTips').textContent = recipe.cooking_tips;
                 document.getElementById('recipeCost').textContent = recipe.cost_estimate.total_cost;
