@@ -278,8 +278,16 @@
                 const difficultyExplanation = document.getElementById('recipeDifficultyExplanation');
                 const difficultyContainer = document.getElementById('difficultyContainer');
                 
-                if (difficultyElement && difficultyExplanation && difficultyContainer && recipe.difficulty) {
+                console.log('Recipe:', recipe);
+                console.log('Difficulty:', recipe.difficulty);
+                console.log('Elements:', { difficultyElement, difficultyExplanation, difficultyContainer });
+                
+                // Always show the container
+                if (difficultyContainer) {
                     difficultyContainer.style.display = 'block';
+                }
+                
+                if (difficultyElement && difficultyExplanation && recipe.difficulty) {
                     const difficultyText = recipe.difficulty.level;
                     difficultyElement.textContent = difficultyText.charAt(0).toUpperCase() + difficultyText.slice(1);
                     
@@ -294,8 +302,17 @@
                         case 'hard':
                             difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-red-500';
                             break;
+                        default:
+                            console.log('Unknown difficulty level:', difficultyText);
+                            difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-gray-500';
                     }
                     difficultyExplanation.textContent = recipe.difficulty.explanation;
+                } else {
+                    console.log('Missing required elements or difficulty data:', {
+                        hasElement: !!difficultyElement,
+                        hasExplanation: !!difficultyExplanation,
+                        hasDifficulty: !!recipe.difficulty
+                    });
                 }
 
                 const ingredientsList = document.getElementById('recipeIngredients');
