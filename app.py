@@ -298,6 +298,10 @@ def generate_recipe():
                 "fat": recipe_data.get("nutritional_info", {}).get("fat", "N/A")
             },
             "cooking_tips": recipe_data.get("cooking_tips", "No specific tips available."),
+            "difficulty": {
+                "level": recipe_data.get("difficulty", {}).get("level", "N/A"),
+                "explanation": recipe_data.get("difficulty", {}).get("explanation", "No difficulty explanation available.")
+            },
             "cost_estimate": {
                 "total_cost": recipe_data.get("cost_estimate", {}).get("total_cost", "N/A"),
                 "cost_per_serving": recipe_data.get("cost_estimate", {}).get("cost_per_serving", "N/A"),
