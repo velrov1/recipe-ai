@@ -136,17 +136,45 @@ def generate_recipe():
     Dietary preferences: {', '.join(dietary_prefs)}.
     {budget_prompt}
     
-    When assessing recipe difficulty, consider:
-    1. Number of ingredients and their preparation complexity
-    2. Number of steps and cooking techniques required
-    3. Timing and multitasking requirements
-    4. Special equipment or skills needed
-    5. Precision required for success
-    
-    Classify as:
-    - EASY: Simple techniques, few ingredients, minimal multitasking
-    - MEDIUM: More ingredients, some complex techniques, moderate timing coordination
-    - HARD: Many ingredients, advanced techniques, precise timing, special skills needed
+    When assessing recipe difficulty, carefully evaluate these criteria:
+
+    1. Ingredients Accessibility:
+       - EASY: Common ingredients found in any grocery store
+       - MEDIUM: Some specialty ingredients but available in larger supermarkets
+       - HARD: Requires visits to specialty stores or hard-to-find items
+
+    2. Preparation Work:
+       - EASY: Minimal chopping, no marinating, simple mixing
+       - MEDIUM: Moderate prep work, some marinating, multiple components
+       - HARD: Extensive chopping, long marination, complex prep steps
+
+    3. Cooking Techniques:
+       - EASY: Basic techniques like boiling, frying, roasting
+       - MEDIUM: More skilled techniques like sauce-making, pastry work
+       - HARD: Advanced techniques like sous-vide, complex baking, temperature control
+
+    4. Time Investment:
+       - EASY: Under 30 minutes active time
+       - MEDIUM: 30-60 minutes active time
+       - HARD: Over 60 minutes active time or requires precise timing
+
+    5. Equipment Requirements:
+       - EASY: Basic pots, pans, and utensils
+       - MEDIUM: Food processor, mixer, or specialized pans
+       - HARD: Specialized equipment or tools
+
+    6. Instructions Complexity:
+       - EASY: Under 5 steps, straightforward instructions
+       - MEDIUM: 5-10 steps, some multitasking
+       - HARD: Over 10 steps or complex multitasking
+
+    Based on these criteria, you MUST classify EVERY recipe as one of:
+    - EASY: Majority of criteria are easy, none are hard
+    - MEDIUM: Mix of easy and medium criteria, at most one hard
+    - HARD: Multiple hard criteria or requires significant skill
+
+    You MUST provide a difficulty level for EVERY recipe - 'not specified' is not acceptable.
+    Include a brief explanation of why you chose that difficulty level.
     
     IMPORTANT: Your response must be ONLY valid JSON, with no additional text before or after. Do not include markdown code blocks or any other formatting.
     Do not escape underscores in field names - use them as is.

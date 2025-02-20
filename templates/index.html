@@ -273,37 +273,29 @@
                 document.getElementById('recipeTime').textContent = `Prep: ${recipe.prep_time} | Cooking: ${recipe.cooking_time}`;
                 document.getElementById('recipeServings').textContent = recipe.servings;
 
-                // Display difficulty level with color coding if available
+                // Display difficulty level with color coding
                 const difficultyElement = document.getElementById('recipeDifficulty');
                 const difficultyExplanation = document.getElementById('recipeDifficultyExplanation');
                 const difficultyContainer = document.getElementById('difficultyContainer');
                 
-                // Only show difficulty section if both elements exist
-                if (difficultyElement && difficultyExplanation && difficultyContainer) {
+                if (difficultyElement && difficultyExplanation && difficultyContainer && recipe.difficulty) {
                     difficultyContainer.style.display = 'block';
+                    const difficultyText = recipe.difficulty.level;
+                    difficultyElement.textContent = difficultyText.charAt(0).toUpperCase() + difficultyText.slice(1);
                     
-                    if (recipe.difficulty) {
-                        const difficultyText = recipe.difficulty.level;
-                        difficultyElement.textContent = difficultyText.charAt(0).toUpperCase() + difficultyText.slice(1);
-                        
-                        // Set color based on difficulty
-                        switch(recipe.difficulty.level.toLowerCase()) {
-                            case 'easy':
-                                difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-green-500';
-                                break;
-                            case 'medium':
-                                difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-yellow-500';
-                                break;
-                            case 'hard':
-                                difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-red-500';
-                                break;
-                        }
-                        difficultyExplanation.textContent = recipe.difficulty.explanation;
-                    } else {
-                        difficultyElement.textContent = 'Not specified';
-                        difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-gray-500';
-                        difficultyExplanation.textContent = '';
+                    // Set color based on difficulty
+                    switch(recipe.difficulty.level.toLowerCase()) {
+                        case 'easy':
+                            difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-green-500';
+                            break;
+                        case 'medium':
+                            difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-yellow-500';
+                            break;
+                        case 'hard':
+                            difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-red-500';
+                            break;
                     }
+                    difficultyExplanation.textContent = recipe.difficulty.explanation;
                 }
 
                 const ingredientsList = document.getElementById('recipeIngredients');
