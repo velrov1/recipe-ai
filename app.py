@@ -176,8 +176,12 @@ def generate_recipe():
     You MUST provide a difficulty level for EVERY recipe - 'not specified' is not acceptable.
     Include a brief explanation of why you chose that difficulty level.
     
-    IMPORTANT: Your response must be ONLY valid JSON, with no additional text before or after. Do not include markdown code blocks or any other formatting.
-    Do not escape underscores in field names - use them as is.
+    IMPORTANT: 
+    1. Your response must be ONLY valid JSON, with no additional text before or after.
+    2. Do not include markdown code blocks or any other formatting.
+    3. Do not escape underscores in field names - use them as is.
+    4. You MUST include a difficulty assessment for EVERY recipe using the criteria above.
+    5. The difficulty explanation should reference specific aspects from the criteria list.
     
     Return the recipe in this EXACT JSON format:
     {{
@@ -203,7 +207,7 @@ def generate_recipe():
         "cooking_tips": "Helpful cooking tips and suggestions (use metric measurements: g, ml, cm, °C)",
         "difficulty": {{
             "level": "One of: easy, medium, hard",
-            "explanation": "Brief explanation of why this difficulty level was chosen"
+            "explanation": "Brief explanation based on ingredients, prep work, techniques, time, equipment, and steps complexity"
         }},
         "cost_estimate": {{
             "total_cost": "Estimate the total cost in EUR (e.g., '12.50 EUR')",
