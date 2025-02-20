@@ -146,6 +146,14 @@
                 <h3 class="text-xl font-semibold mb-4">Cooking Tips</h3>
                 <p id="recipeTips" class="text-gray-700"></p>
             </div>
+
+            <div id="difficultyContainer" class="mt-8" style="display: none;">
+                <h3 class="text-xl font-semibold mb-4">Difficulty Level</h3>
+                <div class="flex items-center mb-2">
+                    <span id="recipeDifficulty" class="text-white px-3 py-1 rounded-full font-semibold"></span>
+                </div>
+                <p id="recipeDifficultyExplanation" class="text-gray-700 text-sm italic"></p>
+            </div>
         </div>
     </div>
 
@@ -268,28 +276,34 @@
                 // Display difficulty level with color coding if available
                 const difficultyElement = document.getElementById('recipeDifficulty');
                 const difficultyExplanation = document.getElementById('recipeDifficultyExplanation');
+                const difficultyContainer = document.getElementById('difficultyContainer');
                 
-                if (recipe.difficulty) {
-                    const difficultyText = recipe.difficulty.level;
-                    difficultyElement.textContent = difficultyText.charAt(0).toUpperCase() + difficultyText.slice(1);
+                // Only show difficulty section if both elements exist
+                if (difficultyElement && difficultyExplanation && difficultyContainer) {
+                    difficultyContainer.style.display = 'block';
                     
-                    // Set color based on difficulty
-                    switch(recipe.difficulty.level.toLowerCase()) {
-                        case 'easy':
-                            difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-green-500';
-                            break;
-                        case 'medium':
-                            difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-yellow-500';
-                            break;
-                        case 'hard':
-                            difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-red-500';
-                            break;
+                    if (recipe.difficulty) {
+                        const difficultyText = recipe.difficulty.level;
+                        difficultyElement.textContent = difficultyText.charAt(0).toUpperCase() + difficultyText.slice(1);
+                        
+                        // Set color based on difficulty
+                        switch(recipe.difficulty.level.toLowerCase()) {
+                            case 'easy':
+                                difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-green-500';
+                                break;
+                            case 'medium':
+                                difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-yellow-500';
+                                break;
+                            case 'hard':
+                                difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-red-500';
+                                break;
+                        }
+                        difficultyExplanation.textContent = recipe.difficulty.explanation;
+                    } else {
+                        difficultyElement.textContent = 'Not specified';
+                        difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-gray-500';
+                        difficultyExplanation.textContent = '';
                     }
-                    difficultyExplanation.textContent = recipe.difficulty.explanation;
-                } else {
-                    difficultyElement.textContent = 'Not specified';
-                    difficultyElement.className = 'text-white px-3 py-1 rounded-full font-semibold bg-gray-500';
-                    difficultyExplanation.textContent = '';
                 }
 
                 const ingredientsList = document.getElementById('recipeIngredients');
