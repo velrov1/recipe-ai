@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧑‍🍳 FoodAI 🧑‍🍳</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-8 text-indigo-600">🧑‍🍳 FoodAI 🧑‍🍳</h1>
+        
+        <!-- Ingredient Selection -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Select Your Ingredients</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {% for category, items in ingredients.items() %}
+                <div class="mb-4 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                    <label class="block text-gray-700 font-bold mb-3 capitalize flex items-center">
+                        <span class="text-lg">{{ category.replace('_', ' ') }}</span>
+                        <span class="ml-2 text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full" id="{{ category }}-count">0 selected</span>
+                    </label>
+                    <div class="relative">
+                        <select class="ingredient-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+                                data-category="{{ category }}" 
+                                multiple
+                                size="6"
+                                title="Hold Ctrl/Cmd to select multiple ingredients">
+                            {% for item in items %}
+                            <option value="{{ item }}" class="p-2 hover:bg-indigo-50 cursor-pointer">{{ item }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="flex justify-end mt-2">
+                            <button class="clear-btn text-sm text-gray-500 hover:text-red-500" data-category="{{ category }}">
+                                Clear Selection
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Dietary Preferences -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Dietary Preferences</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {% for pref in dietary_preferences %}
+                <div class="flex items-center">
+                    <input type="checkbox" id="{{ pref }}" value="{{ pref }}" class="dietary-pref w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="{{ pref }}" class="ml-2 text-sm font-medium text-gray-900">{{ pref }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="text-center mb-8">
+            <button id="generateBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center mx-auto">
+                <span>Generate Recipe</span>
+                <div id="loading" class="hidden ml-3">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+            </button>
+        </div>
+
+        <!-- Recipe Display -->
+        <div id="recipeDisplay" class="hidden bg-white rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800" id="recipeName"></h2>
+                <button id="downloadBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                    <i class="fas fa-download mr-2"></i>Download PDF
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <i class="fas fa-clock text-indigo-600 mb-2"></i>
+                    <p class="text-sm text-gray-600">Time</p>
+                    <p class="font-semibold" id="recipeTime"></p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <i class="fas fa-users text-indigo-600 mb-2"></i>
+                    <p class="text-sm text-gray-600">Servings</p>
+                    <p class="font-semibold" id="recipeServings"></p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <i class="fas fa-euro-sign text-indigo-600 mb-2"></i>
+                    <p class="text-sm text-gray-600">Cost</p>
+                    <p class="font-semibold" id="recipeCost"></p>
+                    <p class="text-xs text-gray-500" id="recipeCostLevel"></p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <i class="fas fa-euro-sign text-indigo-600 mb-2"></i>
+                    <p class="text-sm text-gray-600">Cost per Serving</p>
+                    <p class="font-semibold" id="recipeCostPerServing"></p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Ingredients</h3>
+                    <ul id="recipeIngredients" class="list-disc list-inside space-y-2"></ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Nutritional Information Per Serving</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-600">Calories</p>
+                            <p class="font-semibold" id="recipeCalories"></p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-600">Protein</p>
+                            <p class="font-semibold" id="recipeProtein"></p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-600">Carbs</p>
+                            <p class="font-semibold" id="recipeCarbs"></p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-600">Fat</p>
+                            <p class="font-semibold" id="recipeFat"></p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-600">Fiber</p>
+                            <p class="font-semibold" id="recipeFiber"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold mb-4">Instructions</h3>
+                <ol id="recipeInstructions" class="list-decimal list-inside space-y-4"></ol>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold mb-4">Cooking Tips</h3>
+                <p id="recipeTips" class="text-gray-700"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const loading = document.getElementById('loading');
+            const recipeDisplay = document.getElementById('recipeDisplay');
+            let currentRecipe = null;
+
+            // Initialize all ingredient selects
+            document.querySelectorAll('.ingredient-select').forEach(select => {
+                // Update counter on change
+                select.addEventListener('change', function() {
+                    const category = this.dataset.category;
+                    const count = Array.from(this.selectedOptions).length;
+                    document.getElementById(`${category}-count`).textContent = `${count} selected`;
+                });
+            });
+
+            // Initialize clear buttons
+            document.querySelectorAll('.clear-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    const select = document.querySelector(`select[data-category="${category}"]`);
+                    Array.from(select.options).forEach(option => option.selected = false);
+                    document.getElementById(`${category}-count`).textContent = '0 selected';
+                });
+            });
+
+            generateBtn.addEventListener('click', async function() {
+                const selectedIngredients = [];
+                document.querySelectorAll('.ingredient-select').forEach(select => {
+                    Array.from(select.selectedOptions).forEach(option => {
+                        selectedIngredients.push(option.value);
+                    });
+                });
+
+                const dietaryPreferences = [];
+                document.querySelectorAll('.dietary-pref:checked').forEach(checkbox => {
+                    dietaryPreferences.push(checkbox.value);
+                });
+
+                if (selectedIngredients.length === 0) {
+                    alert('Please select at least one ingredient.');
+                    return;
+                }
+
+                generateBtn.disabled = true;
+                loading.classList.remove('hidden');
+
+                try {
+                    const response = await fetch('/generate_recipe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            ingredients: selectedIngredients,
+                            dietary_preferences: dietaryPreferences
+                        })
+                    });
+
+                    const data = await response.json();
+                    console.log('Server response:', data);
+
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Failed to generate recipe');
+                    }
+
+                    currentRecipe = data;
+                    displayRecipe(currentRecipe);
+                    recipeDisplay.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Error details:', error);
+                    alert(`Error generating recipe: ${error.message}\n\nPlease check the browser console for more details.`);
+                } finally {
+                    generateBtn.disabled = false;
+                    loading.classList.add('hidden');
+                }
+            });
+
+            downloadBtn.addEventListener('click', async function() {
+                if (!currentRecipe) return;
+
+                try {
+                    const response = await fetch('/download_recipe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(currentRecipe)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to download recipe');
+                    }
+
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'recipe.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error downloading recipe. Please try again.');
+                }
+            });
+
+            function displayRecipe(recipe) {
+                document.getElementById('recipeName').textContent = recipe.name;
+                document.getElementById('recipeTime').textContent = `Prep: ${recipe.prep_time} | Cooking: ${recipe.cooking_time}`;
+                document.getElementById('recipeServings').textContent = recipe.servings;
+
+                const ingredientsList = document.getElementById('recipeIngredients');
+                ingredientsList.innerHTML = '';
+                recipe.ingredients.forEach(ingredient => {
+                    const li = document.createElement('li');
+                    li.textContent = ingredient;
+                    ingredientsList.appendChild(li);
+                });
+
+                const instructionsList = document.getElementById('recipeInstructions');
+                instructionsList.innerHTML = '';
+                recipe.instructions.forEach(instruction => {
+                    const li = document.createElement('li');
+                    li.textContent = instruction;
+                    instructionsList.appendChild(li);
+                });
+
+                document.getElementById('recipeCalories').textContent = recipe.nutritional_info.calories;
+                document.getElementById('recipeProtein').textContent = recipe.nutritional_info.protein;
+                document.getElementById('recipeCarbs').textContent = recipe.nutritional_info.carbs;
+                document.getElementById('recipeFat').textContent = recipe.nutritional_info.fat;
+                document.getElementById('recipeFiber').textContent = recipe.nutritional_info.fiber;
+                document.getElementById('recipeTips').textContent = recipe.cooking_tips;
+                document.getElementById('recipeCost').textContent = recipe.cost_estimate.total_cost;
+                document.getElementById('recipeCostPerServing').textContent = recipe.cost_estimate.cost_per_serving;
+                document.getElementById('recipeCostLevel').textContent = recipe.cost_estimate.cost_level;
+            }
+        });
+    </script>
+</body>
+</html>
