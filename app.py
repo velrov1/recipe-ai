@@ -188,7 +188,12 @@ def generate_recipe():
         "name": "Recipe Name",
         "prep_time": "XX minutes",
         "cooking_time": "XX minutes",
-        "servings": "X servings",
+        "servings": {{
+            "count": "X servings",
+            "size_per_serving": "XXX grams",
+            "total_weight": "XXX grams",
+            "serving_note": "Brief explanation of serving size calculation"
+        }},
         "ingredients": [
             "ingredient 1 with precise measurement in grams/milliliters",
             "ingredient 2 with precise measurement in grams/milliliters"
@@ -213,6 +218,16 @@ def generate_recipe():
             "total_cost": "Estimate the total cost in EUR (e.g., '12.50 EUR')",
             "cost_per_serving": "Calculate cost per serving in EUR (e.g., '3.10 EUR')",
             "cost_level": "One of: budget (under 15 EUR), moderate (15-30 EUR), expensive (over 30 EUR)"
+        }},
+        "beverage_pairings": {{
+            "alcoholic": [
+                "Suggested alcoholic beverage 1 with brief explanation",
+                "Suggested alcoholic beverage 2 with brief explanation"
+            ],
+            "non_alcoholic": [
+                "Suggested non-alcoholic beverage 1 with brief explanation",
+                "Suggested non-alcoholic beverage 2 with brief explanation"
+            ]
         }}
     }}
     
@@ -288,7 +303,12 @@ def generate_recipe():
             "name": recipe_data.get("name", "Recipe"),
             "prep_time": recipe_data.get("prep_time", "N/A"),
             "cooking_time": recipe_data.get("cooking_time", "N/A"),
-            "servings": recipe_data.get("servings", "N/A"),
+            "servings": {
+                "count": recipe_data.get("servings", {}).get("count", "N/A"),
+                "size_per_serving": recipe_data.get("servings", {}).get("size_per_serving", "N/A"),
+                "total_weight": recipe_data.get("servings", {}).get("total_weight", "N/A"),
+                "serving_note": recipe_data.get("servings", {}).get("serving_note", "No serving size explanation available.")
+            },
             "ingredients": recipe_data.get("ingredients", []),
             "instructions": recipe_data.get("instructions", []),
             "nutritional_info": {
@@ -306,6 +326,10 @@ def generate_recipe():
                 "total_cost": recipe_data.get("cost_estimate", {}).get("total_cost", "N/A"),
                 "cost_per_serving": recipe_data.get("cost_estimate", {}).get("cost_per_serving", "N/A"),
                 "cost_level": recipe_data.get("cost_estimate", {}).get("cost_level", "N/A")
+            },
+            "beverage_pairings": {
+                "alcoholic": recipe_data.get("beverage_pairings", {}).get("alcoholic", ["No alcoholic pairings available"]),
+                "non_alcoholic": recipe_data.get("beverage_pairings", {}).get("non_alcoholic", ["No non-alcoholic pairings available"])
             }
         }
         return jsonify(structured_recipe)
