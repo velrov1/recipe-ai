@@ -136,6 +136,18 @@ def generate_recipe():
     Dietary preferences: {', '.join(dietary_prefs)}.
     {budget_prompt}
     
+    When assessing recipe difficulty, consider:
+    1. Number of ingredients and their preparation complexity
+    2. Number of steps and cooking techniques required
+    3. Timing and multitasking requirements
+    4. Special equipment or skills needed
+    5. Precision required for success
+    
+    Classify as:
+    - EASY: Simple techniques, few ingredients, minimal multitasking
+    - MEDIUM: More ingredients, some complex techniques, moderate timing coordination
+    - HARD: Many ingredients, advanced techniques, precise timing, special skills needed
+    
     IMPORTANT: Your response must be ONLY valid JSON, with no additional text before or after. Do not include markdown code blocks or any other formatting.
     Do not escape underscores in field names - use them as is.
     
@@ -161,6 +173,10 @@ def generate_recipe():
             "fiber": "XX g"
         }},
         "cooking_tips": "Helpful cooking tips and suggestions (use metric measurements: g, ml, cm, °C)",
+        "difficulty": {{
+            "level": "One of: easy, medium, hard",
+            "explanation": "Brief explanation of why this difficulty level was chosen"
+        }},
         "cost_estimate": {{
             "total_cost": "Estimate the total cost in EUR (e.g., '12.50 EUR')",
             "cost_per_serving": "Calculate cost per serving in EUR (e.g., '3.10 EUR')",
