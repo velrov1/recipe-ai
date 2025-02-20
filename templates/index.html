@@ -289,10 +289,19 @@
                 document.getElementById('recipeName').textContent = recipe.name;
                 document.getElementById('recipeTime').textContent = `Prep: ${recipe.prep_time} | Cooking: ${recipe.cooking_time}`;
                 // Display serving information
-                document.getElementById('recipeServings').textContent = recipe.servings.count;
-                document.getElementById('recipeServingSize').textContent = `${recipe.servings.size_per_serving} per serving`;
-                document.getElementById('recipeTotalWeight').textContent = `Total: ${recipe.servings.total_weight}`;
-                document.getElementById('recipeServingNote').textContent = recipe.servings.serving_note;
+                const servings = recipe.servings;
+                if (typeof servings === 'object' && servings !== null) {
+                    document.getElementById('recipeServings').textContent = servings.count || 'N/A';
+                    document.getElementById('recipeServingSize').textContent = servings.size_per_serving ? `${servings.size_per_serving} per serving` : '';
+                    document.getElementById('recipeTotalWeight').textContent = servings.total_weight ? `Total: ${servings.total_weight}` : '';
+                    document.getElementById('recipeServingNote').textContent = servings.serving_note || '';
+                } else {
+                    // Fallback for old format
+                    document.getElementById('recipeServings').textContent = servings || 'N/A';
+                    document.getElementById('recipeServingSize').textContent = '';
+                    document.getElementById('recipeTotalWeight').textContent = '';
+                    document.getElementById('recipeServingNote').textContent = '';
+                }
 
                 // Display difficulty level with color coding
                 const difficultyElement = document.getElementById('recipeDifficulty');

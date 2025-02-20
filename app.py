@@ -132,9 +132,21 @@ def generate_recipe():
     4. Suggesting cheaper alternatives when possible
     """ if is_budget else ""
 
-    prompt = f"""You are a professional nutritionist and chef AI. Generate a recipe using these ingredients: {', '.join(selected_ingredients)}. 
+    prompt = f"""You are a professional nutritionist, chef, and sommelier AI. Generate a recipe using these ingredients: {', '.join(selected_ingredients)}. 
     Dietary preferences: {', '.join(dietary_prefs)}.
     {budget_prompt}
+    
+    For beverage pairings:
+    1. Suggest 2-3 alcoholic beverages that complement the dish's flavors
+    2. Explain why each beverage pairs well with the dish
+    3. Suggest 2-3 non-alcoholic alternatives with explanations
+    4. Consider the dish's intensity, flavors, and cooking method
+    
+    For serving sizes:
+    1. Calculate exact portion sizes in grams
+    2. Base number of servings on standard portion sizes
+    3. Consider dish type (main course, side dish, dessert)
+    4. Explain your serving size calculation
     
     When assessing recipe difficulty, carefully evaluate these criteria:
 
