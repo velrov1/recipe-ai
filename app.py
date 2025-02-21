@@ -155,7 +155,7 @@ INGREDIENTS = {
         '🥩 Beef', '🍗 Chicken', '🐷 Pork', '🐟 Fish', '🦃 Turkey', '🦆 Duck',
         '🐑 Lamb', '🦐 Shrimp', '🦀 Crab', '🐙 Octopus', '🦑 Squid', '🐠 Salmon',
         '🦞 Lobster', '🐠 Tuna', '🐟 Cod', '🐟 Trout', '🦪 Oysters', '🦪 Mussels',
-        '🥚 Eggs', '🥓 Bacon', '🦃 Turkey Bacon', '🥩 Veal', '🐑 Mutton'
+        '🥓 Bacon', '🦃 Turkey Bacon', '🥩 Veal', '🐑 Mutton',
         '🐠 Sea Bass', '🐟 Halibut'
     ],
     'vegetables': [
@@ -183,7 +183,7 @@ INGREDIENTS = {
         '🌾 Kamut', '🌾 Farro', '🍝 Orzo', '🌾 Triticale', '🥖 Pita'
     ],
     'dairy': [
-        '🥛 Milk', '🧀 Cheese', '🧈 Butter', '🥛 Yogurt', '🥛 Cream',
+        '🥚 Eggs', '🥛 Milk', '🧀 Cheese', '🧈 Butter', '🥛 Yogurt', '🥛 Cream',
         '🧀 Mozzarella', '🧀 Cheddar', '🧀 Parmesan', '🧀 Feta', '🥛 Sour Cream',
         '🧀 Brie', '🧀 Gouda', '🧀 Blue Cheese', '🧀 Ricotta', '🧀 Mascarpone',
         '🧀 Provolone', '🧀 Gruyere', '🧀 Camembert', '🥛 Kefir', '🧀 Halloumi'
