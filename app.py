@@ -262,6 +262,14 @@ def generate_recipe():
     Dietary preferences: {', '.join(dietary_prefs)}.
     {budget_prompt}
     
+    IMPORTANT REQUIREMENTS:
+    1. Analyze the recipe for common allergens (milk, eggs, fish, shellfish, tree nuts, peanuts, wheat, soybeans) and list them.
+    2. Provide detailed nutritional information including:
+       - Sugar, sodium, cholesterol content
+       - Vitamins (A, C, D, E, K)
+       - Minerals (calcium, iron, potassium, magnesium)
+       Make the values realistic but they don't need to be exact.
+    
     For beverage pairings:
     1. Suggest 2-3 alcoholic beverages that complement the dish's flavors
     2. Explain why each beverage pairs well with the dish
@@ -321,7 +329,7 @@ def generate_recipe():
     4. You MUST include a difficulty assessment for EVERY recipe using the criteria above.
     5. The difficulty explanation should reference specific aspects from the criteria list.
     
-    Return the recipe in this EXACT JSON format:
+    Return the recipe in this simplified JSON format:
     {{
         "name": "Recipe Name",
         "prep_time": "XX minutes",
@@ -340,24 +348,29 @@ def generate_recipe():
             "Step 1 instruction (use Celsius for temperatures)",
             "Step 2 instruction (use Celsius for temperatures)"
         ],
+        "allergens": [
+            "List of allergens found in the recipe"
+        ],
         "nutritional_info": {{
             "calories": "XXX kcal",
             "protein": "XX g",
             "carbs": "XX g",
             "fat": "XX g",
             "fiber": "XX g",
-            "sugar": "XX g",
-            "sodium": "XXX mg",
-            "cholesterol": "XX mg",
-            "saturated_fat": "XX g",
-            "trans_fat": "XX g",
-            "vitamins": [
-                "Vitamin A: XX% DV",
-                "Vitamin C: XX% DV",
-                "Vitamin D: XX% DV",
-                "Iron: XX% DV",
-                "Calcium: XX% DV"
-            ]
+            "detailed_nutrients": {{
+                "Sugar": "XX g",
+                "Sodium": "XXX mg",
+                "Cholesterol": "XX mg",
+                "Vitamin A": "XX% DV",
+                "Vitamin C": "XX% DV",
+                "Vitamin D": "XX% DV",
+                "Vitamin E": "XX% DV",
+                "Vitamin K": "XX% DV",
+                "Calcium": "XX% DV",
+                "Iron": "XX% DV",
+                "Potassium": "XX% DV",
+                "Magnesium": "XX% DV"
+            }}
         }},
         "cooking_tips": "Helpful cooking tips and suggestions (use metric measurements: g, ml, cm, °C)",
         "difficulty": {{
@@ -461,11 +474,14 @@ def generate_recipe():
             },
             "ingredients": recipe_data.get("ingredients", []),
             "instructions": recipe_data.get("instructions", []),
+            "allergens": recipe_data.get("allergens", []),
             "nutritional_info": {
                 "calories": recipe_data.get("nutritional_info", {}).get("calories", "N/A"),
                 "protein": recipe_data.get("nutritional_info", {}).get("protein", "N/A"),
                 "carbs": recipe_data.get("nutritional_info", {}).get("carbs", "N/A"),
-                "fat": recipe_data.get("nutritional_info", {}).get("fat", "N/A")
+                "fat": recipe_data.get("nutritional_info", {}).get("fat", "N/A"),
+                "fiber": recipe_data.get("nutritional_info", {}).get("fiber", "N/A"),
+                "detailed_nutrients": recipe_data.get("nutritional_info", {}).get("detailed_nutrients", {})
             },
             "cooking_tips": recipe_data.get("cooking_tips", "No specific tips available."),
             "difficulty": {

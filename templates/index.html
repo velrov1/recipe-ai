@@ -107,6 +107,21 @@
                 </div>
             </div>
 
+            <!-- Allergen Warnings -->
+            <div id="allergenWarnings" class="mb-8 hidden">
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <span class="text-2xl text-red-500">⚠️</span>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium text-red-800">Allergen Warning!</h3>
+                            <div class="mt-2 text-red-700" id="allergenList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                     <h3 class="text-xl font-semibold mb-4">Ingredients</h3>
@@ -139,6 +154,14 @@
                             <div class="text-center">
                                 <p class="font-semibold" id="recipeFiber"></p>
                                 <p class="text-sm text-gray-600">Fiber</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Detailed Nutrients -->
+                        <div class="mt-6 border-t border-gray-200 pt-6">
+                            <h4 class="text-lg font-medium mb-4 text-gray-800">Detailed Nutritional Information</h4>
+                            <div class="grid grid-cols-2 gap-4" id="detailedNutrients">
+                                <!-- Will be populated dynamically -->
                             </div>
                         </div>
                         
@@ -660,11 +683,41 @@
                         nonAlcoholicList.appendChild(li);
                     });
                 }
+                // Display allergens if present
+                const allergenWarnings = document.getElementById('allergenWarnings');
+                const allergenList = document.getElementById('allergenList');
+                if (recipe.allergens && recipe.allergens.length > 0) {
+                    allergenList.innerHTML = recipe.allergens.map(allergen => 
+                        `<div class="mb-1">• ${allergen}</div>`
+                    ).join('');
+                    allergenWarnings.classList.remove('hidden');
+                } else {
+                    allergenWarnings.classList.add('hidden');
+                }
+
+                // Display detailed nutrients
+                const detailedNutrients = document.getElementById('detailedNutrients');
+                detailedNutrients.innerHTML = '';
+                
+                // Add basic nutrients
                 document.getElementById('recipeFiber').textContent = recipe.nutritional_info.fiber;
                 document.getElementById('recipeTips').textContent = recipe.cooking_tips;
                 document.getElementById('recipeCost').textContent = recipe.cost_estimate.total_cost;
                 document.getElementById('recipeCostPerServing').textContent = recipe.cost_estimate.cost_per_serving;
                 document.getElementById('recipeCostLevel').textContent = recipe.cost_estimate.cost_level;
+
+                // Add detailed nutrients if present
+                if (recipe.nutritional_info.detailed_nutrients) {
+                    Object.entries(recipe.nutritional_info.detailed_nutrients).forEach(([nutrient, value]) => {
+                        const div = document.createElement('div');
+                        div.className = 'flex justify-between items-center';
+                        div.innerHTML = `
+                            <span class="text-gray-600">${nutrient}</span>
+                            <span class="font-medium">${value}</span>
+                        `;
+                        detailedNutrients.appendChild(div);
+                    });
+                }
 
 
             }
