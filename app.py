@@ -136,20 +136,6 @@ client = groq.Groq(api_key=os.getenv('GROQ_API_KEY'))
 # Support for proxy servers
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-# Common food allergens based on FDA guidelines
-ALLERGENS = {
-    'milk': ['milk', 'cream', 'yogurt', 'cheese', 'butter', 'casein', 'whey'],
-    'eggs': ['egg', 'albumin', 'mayonnaise', 'meringue'],
-    'fish': ['fish', 'cod', 'salmon', 'tuna', 'bass', 'flounder', 'anchovies'],
-    'shellfish': ['shrimp', 'crab', 'lobster', 'clams', 'mussels', 'oysters', 'scallops'],
-    'tree_nuts': ['almonds', 'walnuts', 'pecans', 'cashews', 'pistachios', 'hazelnuts', 'macadamia'],
-    'peanuts': ['peanut', 'peanut butter', 'peanut oil', 'peanut flour'],
-    'wheat': ['wheat', 'flour', 'bread', 'pasta', 'couscous', 'bulgur', 'semolina'],
-    'soybeans': ['soy', 'tofu', 'miso', 'tempeh', 'soy sauce', 'edamame'],
-    'sesame': ['sesame seeds', 'sesame oil', 'tahini'],
-    'gluten': ['wheat', 'rye', 'barley', 'malt', 'seitan']
-}
-
 INGREDIENTS = {
     'meat': [
         '🥩 Beef', '🍗 Chicken', '🐷 Pork', '🐟 Fish', '🦃 Turkey', '🦆 Duck',
@@ -257,25 +243,6 @@ def convert_units():
     })
 
 @app.route('/generate_recipe', methods=['POST'])
-def detect_allergens(ingredients):
-    """Detect common allergens in a list of ingredients."""
-    found_allergens = {}
-    
-    # Convert ingredients to lowercase for case-insensitive matching
-    ingredients_lower = [ing.lower() for ing in ingredients]
-    
-    # Check each allergen category
-    for category, allergens in ALLERGENS.items():
-        # Look for any allergen from this category in the ingredients
-        found = []
-        for allergen in allergens:
-            if any(allergen in ing for ing in ingredients_lower):
-                found.append(allergen)
-        if found:
-            found_allergens[category] = found
-    
-    return found_allergens
-
 @app.route('/generate_recipe', methods=['POST'])
 def generate_recipe():
     data = request.json
@@ -482,18 +449,10 @@ def generate_recipe():
             }), 500
             
         # Ensure the recipe data has all required fields with default values
-        # Detect allergens in the recipe ingredients
-        allergen_warnings = detect_allergens(recipe_data.get("ingredients", []))
-        
         structured_recipe = {
             "name": recipe_data.get("name", "Recipe"),
             "prep_time": recipe_data.get("prep_time", "N/A"),
             "cooking_time": recipe_data.get("cooking_time", "N/A"),
-            "allergen_warnings": {
-                "detected_allergens": allergen_warnings,
-                "warning_message": "This recipe contains the following allergens: " + 
-                                  ", ".join(allergen_warnings.keys()) if allergen_warnings else "No common allergens detected"
-            },
             "servings": {
                 "count": recipe_data.get("servings", {}).get("count", "N/A"),
                 "size_per_serving": recipe_data.get("servings", {}).get("size_per_serving", "N/A"),
