@@ -666,34 +666,7 @@
                 document.getElementById('recipeCostPerServing').textContent = recipe.cost_estimate.cost_per_serving;
                 document.getElementById('recipeCostLevel').textContent = recipe.cost_estimate.cost_level;
 
-                // Display allergen warnings
-                const allergenWarningMessage = document.getElementById('allergenWarningMessage');
-                const allergenDetails = document.getElementById('allergenDetails');
-                const allergenSection = document.getElementById('allergenWarningsSection');
 
-                if (recipe.allergen_warnings) {
-                    allergenSection.style.display = 'block';
-                    allergenWarningMessage.textContent = recipe.allergen_warnings.warning_message;
-
-                    // Display detailed allergen information
-                    allergenDetails.innerHTML = '';
-                    const detectedAllergens = recipe.allergen_warnings.detected_allergens;
-                    if (Object.keys(detectedAllergens).length > 0) {
-                        const ul = document.createElement('ul');
-                        ul.className = 'list-disc pl-5 mt-2 space-y-1';
-                        
-                        Object.entries(detectedAllergens).forEach(([category, ingredients]) => {
-                            const li = document.createElement('li');
-                            li.className = 'text-yellow-800';
-                            li.textContent = `${category.replace('_', ' ').charAt(0).toUpperCase() + category.slice(1)}: ${ingredients.join(', ')}`;
-                            ul.appendChild(li);
-                        });
-                        
-                        allergenDetails.appendChild(ul);
-                    }
-                } else {
-                    allergenSection.style.display = 'none';
-                }
             }
         });
     </script>
