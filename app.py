@@ -7,6 +7,86 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from datetime import datetime
 from werkzeug.middleware.proxy_fix import ProxyFix
+import re
+
+# Unit conversion constants and functions
+UNIT_CONVERSIONS = {
+    # Volume
+    'cup': {'ml': 236.588, 'l': 0.236588},
+    'tbsp': {'ml': 14.7868, 'tsp': 3},
+    'tsp': {'ml': 4.92892},
+    'fl_oz': {'ml': 29.5735},
+    'pint': {'ml': 473.176},
+    'quart': {'ml': 946.353},
+    'gallon': {'l': 3.78541},
+    
+    # Weight
+    'oz': {'g': 28.3495},
+    'lb': {'g': 453.592, 'kg': 0.453592},
+    'g': {'oz': 0.035274},
+    'kg': {'lb': 2.20462},
+    
+    # Temperature
+    'F': {'C': lambda x: (x - 32) * 5/9},
+    'C': {'F': lambda x: (x * 9/5) + 32}
+}
+
+def extract_number_and_unit(ingredient_str):
+    """Extract number and unit from ingredient string."""
+    # Pattern for finding numbers (including fractions) and units
+    pattern = r'([\d./]+)\s*([a-zA-Z]+)'
+    match = re.search(pattern, ingredient_str)
+    if match:
+        number_str, unit = match.groups()
+        # Convert fraction to decimal if needed
+        if '/' in number_str:
+            num, denom = map(float, number_str.split('/'))
+            number = num / denom
+        else:
+            number = float(number_str)
+        return number, unit.lower()
+    return None, None
+
+def convert_unit(value, from_unit, to_unit):
+    """Convert between units using the conversion table."""
+    if from_unit == to_unit:
+        return value
+        
+    if from_unit in UNIT_CONVERSIONS and to_unit in UNIT_CONVERSIONS[from_unit]:
+        conversion = UNIT_CONVERSIONS[from_unit][to_unit]
+        if callable(conversion):
+            return conversion(value)
+        return value * conversion
+        
+    # Try reverse conversion
+    if to_unit in UNIT_CONVERSIONS and from_unit in UNIT_CONVERSIONS[to_unit]:
+        conversion = UNIT_CONVERSIONS[to_unit][from_unit]
+        if callable(conversion):
+            return 1 / conversion(1/value)
+        return value / conversion
+        
+    # Try conversion through a common unit (e.g., ml for volume)
+    if from_unit in UNIT_CONVERSIONS and to_unit in UNIT_CONVERSIONS:
+        common_units = set(UNIT_CONVERSIONS[from_unit].keys()) & \
+                      set(unit for u in UNIT_CONVERSIONS.values() for unit in u.keys())
+        if common_units:
+            common_unit = next(iter(common_units))
+            first_conversion = convert_unit(value, from_unit, common_unit)
+            return convert_unit(first_conversion, common_unit, to_unit)
+            
+    return None
+
+def format_measurement(value, unit):
+    """Format a measurement value with appropriate precision."""
+    if value < 0.1:
+        return f"{value:.3f} {unit}"
+    elif value < 1:
+        return f"{value:.2f} {unit}"
+    elif value % 1 == 0:
+        return f"{int(value)} {unit}"
+    else:
+        return f"{value:.1f} {unit}"
+
 
 def modify_prompt_for_bulgarian(prompt):
     return prompt + "\n\nPlease provide the recipe in Bulgarian language only. All measurements, instructions, and descriptions should be in Bulgarian."
@@ -142,6 +222,24 @@ def set_language():
         session['language'] = lang
         return jsonify({'status': 'success', 'translations': TRANSLATIONS[lang]})
     return jsonify({'status': 'error', 'message': 'Language not supported'})
+
+@app.route('/convert_units', methods=['POST'])
+def convert_units():
+    data = request.json
+    value = float(data['value'])
+    from_unit = data['from_unit'].lower()
+    to_unit = data['to_unit'].lower()
+    
+    result = convert_unit(value, from_unit, to_unit)
+    if result is not None:
+        return jsonify({
+            'success': True,
+            'result': format_measurement(result, to_unit)
+        })
+    return jsonify({
+        'success': False,
+        'error': f'Cannot convert from {from_unit} to {to_unit}'
+    })
 
 @app.route('/generate_recipe', methods=['POST'])
 def generate_recipe():

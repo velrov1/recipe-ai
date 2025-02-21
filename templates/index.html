@@ -140,8 +140,76 @@
                 </div>
             </div>
 
+            <!-- Unit Conversion Tool -->
+            <div class="mt-8 bg-indigo-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold mb-4">Unit Conversion</h3>
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex-1 min-w-[200px]">
+                        <input type="number" id="conversionValue" class="w-full p-2 border rounded" placeholder="Enter value">
+                    </div>
+                    <div class="flex-1 min-w-[200px]">
+                        <select id="fromUnit" class="w-full p-2 border rounded">
+                            <option value="">From Unit</option>
+                            <optgroup label="Volume">
+                                <option value="cup">Cups</option>
+                                <option value="tbsp">Tablespoons</option>
+                                <option value="tsp">Teaspoons</option>
+                                <option value="fl_oz">Fluid Ounces</option>
+                                <option value="ml">Milliliters</option>
+                                <option value="l">Liters</option>
+                            </optgroup>
+                            <optgroup label="Weight">
+                                <option value="oz">Ounces</option>
+                                <option value="lb">Pounds</option>
+                                <option value="g">Grams</option>
+                                <option value="kg">Kilograms</option>
+                            </optgroup>
+                            <optgroup label="Temperature">
+                                <option value="F">Fahrenheit</option>
+                                <option value="C">Celsius</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="flex-1 min-w-[200px]">
+                        <select id="toUnit" class="w-full p-2 border rounded">
+                            <option value="">To Unit</option>
+                            <optgroup label="Volume">
+                                <option value="cup">Cups</option>
+                                <option value="tbsp">Tablespoons</option>
+                                <option value="tsp">Teaspoons</option>
+                                <option value="fl_oz">Fluid Ounces</option>
+                                <option value="ml">Milliliters</option>
+                                <option value="l">Liters</option>
+                            </optgroup>
+                            <optgroup label="Weight">
+                                <option value="oz">Ounces</option>
+                                <option value="lb">Pounds</option>
+                                <option value="g">Grams</option>
+                                <option value="kg">Kilograms</option>
+                            </optgroup>
+                            <optgroup label="Temperature">
+                                <option value="F">Fahrenheit</option>
+                                <option value="C">Celsius</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <button id="convertBtn" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition-colors">
+                        Convert
+                    </button>
+                </div>
+                <div id="conversionResult" class="mt-4 text-lg font-semibold text-indigo-700 hidden"></div>
+            </div>
+
+            <!-- Interactive Cooking Guide -->
             <div class="mt-8">
-                <h3 class="text-xl font-semibold mb-4">Instructions</h3>
+                <h3 class="text-xl font-semibold mb-4">Interactive Cooking Guide</h3>
+                <div id="cookingGuide" class="space-y-6">
+                    <!-- Steps will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Instructions (Hidden but preserved for PDF) -->
+            <div class="hidden">
                 <ol id="recipeInstructions" class="list-decimal list-inside space-y-4"></ol>
             </div>
 
@@ -175,7 +243,144 @@
     </div>
 
     <script>
+        // Unit conversion functionality
+        function convertUnits() {
+            const value = document.getElementById('conversionValue').value;
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            
+            if (!value || !fromUnit || !toUnit) {
+                alert('Please fill in all conversion fields');
+                return;
+            }
+            
+            fetch('/convert_units', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    value: value,
+                    from_unit: fromUnit,
+                    to_unit: toUnit
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('conversionResult');
+                if (data.success) {
+                    resultDiv.textContent = `${value} ${fromUnit} = ${data.result}`;
+                    resultDiv.classList.remove('text-red-600');
+                    resultDiv.classList.add('text-indigo-700');
+                } else {
+                    resultDiv.textContent = data.error;
+                    resultDiv.classList.remove('text-indigo-700');
+                    resultDiv.classList.add('text-red-600');
+                }
+                resultDiv.classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during conversion');
+            });
+        }
+
+        // Interactive cooking guide functionality
+        function createInteractiveCookingGuide(instructions) {
+            const guideContainer = document.getElementById('cookingGuide');
+            guideContainer.innerHTML = '';
+            
+            instructions.forEach((instruction, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'bg-white p-6 rounded-lg shadow-md transition-all duration-300';
+                stepDiv.dataset.step = index;
+                
+                const header = document.createElement('div');
+                header.className = 'flex items-center justify-between mb-4';
+                
+                const stepNumber = document.createElement('span');
+                stepNumber.className = 'text-2xl font-bold text-indigo-600';
+                stepNumber.textContent = `Step ${index + 1}`;
+                
+                const timer = document.createElement('div');
+                timer.className = 'flex items-center space-x-2';
+                
+                // Extract time from instruction if mentioned
+                const timeMatch = instruction.match(/(\d+)\s*(minute|min|hour|hr)/i);
+                if (timeMatch) {
+                    const timerBtn = document.createElement('button');
+                    timerBtn.className = 'bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full hover:bg-indigo-200 transition-colors';
+                    timerBtn.innerHTML = '<i class="fas fa-clock mr-1"></i> Start Timer';
+                    timerBtn.onclick = () => startTimer(timerBtn, timeMatch[1], timeMatch[2]);
+                    timer.appendChild(timerBtn);
+                }
+                
+                header.appendChild(stepNumber);
+                header.appendChild(timer);
+                
+                const content = document.createElement('div');
+                content.className = 'text-gray-700';
+                content.textContent = instruction;
+                
+                const completeBtn = document.createElement('button');
+                completeBtn.className = 'mt-4 bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors w-full';
+                completeBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Mark as Complete';
+                completeBtn.onclick = () => {
+                    stepDiv.classList.add('bg-green-50');
+                    completeBtn.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                    completeBtn.classList.add('bg-green-100', 'text-green-700', 'hover:bg-green-200');
+                    completeBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Completed!';
+                    completeBtn.disabled = true;
+                    
+                    // Scroll next step into view if exists
+                    const nextStep = document.querySelector(`[data-step="${index + 1}"]`);
+                    if (nextStep) {
+                        nextStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                };
+                
+                stepDiv.appendChild(header);
+                stepDiv.appendChild(content);
+                stepDiv.appendChild(completeBtn);
+                guideContainer.appendChild(stepDiv);
+            });
+        }
+
+        function startTimer(button, duration, unit) {
+            let seconds = unit.toLowerCase().startsWith('hour') ? duration * 3600 : duration * 60;
+            button.disabled = true;
+            
+            const interval = setInterval(() => {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                button.innerHTML = `<i class="fas fa-clock mr-1"></i> ${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+                
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    button.innerHTML = '<i class="fas fa-check mr-1"></i> Time\'s up!';
+                    button.classList.remove('bg-indigo-100', 'text-indigo-700');
+                    button.classList.add('bg-green-100', 'text-green-700');
+                    
+                    // Create notification
+                    if (Notification.permission === 'granted') {
+                        new Notification('Timer Complete!', {
+                            body: `Your ${duration} ${unit} timer is complete!`,
+                            icon: '/static/favicon.ico'
+                        });
+                    }
+                }
+                seconds--;
+            }, 1000);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Set up unit conversion event listeners
+            document.getElementById('convertBtn').addEventListener('click', convertUnits);
+            
+            // Request notification permission
+            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
 
             const generateBtn = document.getElementById('generateBtn');
             const downloadBtn = document.getElementById('downloadBtn');
@@ -286,6 +491,8 @@
             });
 
             function displayRecipe(recipe) {
+                // Create interactive cooking guide
+                createInteractiveCookingGuide(recipe.instructions);
                 document.getElementById('recipeName').textContent = recipe.name;
                 document.getElementById('recipeTime').textContent = `Prep: ${recipe.prep_time} | Cooking: ${recipe.cooking_time}`;
                 // Display serving information
