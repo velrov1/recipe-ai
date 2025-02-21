@@ -343,7 +343,19 @@ def generate_recipe():
             "protein": "XX g",
             "carbs": "XX g",
             "fat": "XX g",
-            "fiber": "XX g"
+            "fiber": "XX g",
+            "sugar": "XX g",
+            "sodium": "XXX mg",
+            "cholesterol": "XX mg",
+            "saturated_fat": "XX g",
+            "trans_fat": "XX g",
+            "vitamins": [
+                "Vitamin A: XX% DV",
+                "Vitamin C: XX% DV",
+                "Vitamin D: XX% DV",
+                "Iron: XX% DV",
+                "Calcium: XX% DV"
+            ]
         }},
         "cooking_tips": "Helpful cooking tips and suggestions (use metric measurements: g, ml, cm, °C)",
         "difficulty": {{

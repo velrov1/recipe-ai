@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧑‍🍳 FoodAI 🧑‍🍳</title>
+    <title>🧑‍🍳 RecipAI 🧑‍🍳</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
@@ -11,7 +11,7 @@
 <body class="bg-gray-100">
 
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold text-center mb-8 text-indigo-600">🧑‍🍳 FoodAI 🧑‍🍳</h1>
+        <h1 class="text-4xl font-bold text-center mb-8 text-indigo-600">🧑‍🍳 RecipAI 🧑‍🍳</h1>
         
         <!-- Ingredient Selection -->
         <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -115,26 +115,67 @@
                 
                 <div>
                     <h3 class="text-xl font-semibold mb-4">Nutritional Information Per Serving</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Calories</p>
-                            <p class="font-semibold" id="recipeCalories"></p>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <!-- Main nutritional info -->
+                        <div class="text-center mb-6 pb-6 border-b border-gray-200">
+                            <p class="text-3xl font-bold text-indigo-600" id="recipeCalories"></p>
+                            <p class="text-gray-600">Calories</p>
                         </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Protein</p>
-                            <p class="font-semibold" id="recipeProtein"></p>
+                        
+                        <!-- Macronutrients -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 pb-6 border-b border-gray-200">
+                            <div class="text-center">
+                                <p class="font-semibold" id="recipeProtein"></p>
+                                <p class="text-sm text-gray-600">Protein</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="font-semibold" id="recipeCarbs"></p>
+                                <p class="text-sm text-gray-600">Carbs</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="font-semibold" id="recipeFat"></p>
+                                <p class="text-sm text-gray-600">Fat</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="font-semibold" id="recipeFiber"></p>
+                                <p class="text-sm text-gray-600">Fiber</p>
+                            </div>
                         </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Carbs</p>
-                            <p class="font-semibold" id="recipeCarbs"></p>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Fat</p>
-                            <p class="font-semibold" id="recipeFat"></p>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Fiber</p>
-                            <p class="font-semibold" id="recipeFiber"></p>
+                        
+                        <!-- Detailed nutrients -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-3 text-gray-700">Additional Information</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Sugar</span>
+                                        <span class="font-medium" id="recipeSugar"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Sodium</span>
+                                        <span class="font-medium" id="recipeSodium"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Cholesterol</span>
+                                        <span class="font-medium" id="recipeCholesterol"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Saturated Fat</span>
+                                        <span class="font-medium" id="recipeSaturatedFat"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Trans Fat</span>
+                                        <span class="font-medium" id="recipeTransFat"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold mb-3 text-gray-700">Vitamins & Minerals</h4>
+                                <div class="grid grid-cols-1 gap-2" id="recipeVitamins">
+                                    <!-- Vitamins will be added dynamically -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
