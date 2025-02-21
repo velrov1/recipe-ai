@@ -242,6 +242,12 @@
         </div>
     </div>
 
+    <!-- Audio for timer completion -->
+    <audio id="timerSound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/timer-complete.mp3') }}" type="audio/mpeg">
+        <source src="{{ url_for('static', filename='sounds/timer-complete.ogg') }}" type="audio/ogg">
+    </audio>
+
     <script>
         // Unit conversion functionality
         function convertUnits() {
@@ -361,6 +367,22 @@
                     button.classList.remove('bg-indigo-100', 'text-indigo-700');
                     button.classList.add('bg-green-100', 'text-green-700');
                     
+                    // Play sound notification
+                    const timerSound = document.getElementById('timerSound');
+                    try {
+                        // Reset the audio to the beginning
+                        timerSound.currentTime = 0;
+                        // Play the sound
+                        const playPromise = timerSound.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log('Audio playback failed:', error);
+                            });
+                        }
+                    } catch (error) {
+                        console.log('Audio playback error:', error);
+                    }
+
                     // Create notification
                     if (Notification.permission === 'granted') {
                         new Notification('Timer Complete!', {
