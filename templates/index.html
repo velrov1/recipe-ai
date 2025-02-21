@@ -8,30 +8,30 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-900 text-gray-100">
 
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold text-center mb-8 text-indigo-600">🧑‍🍳 FoodAI 🧑‍🍳</h1>
         
         <!-- Ingredient Selection -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
             <h2 class="text-2xl font-semibold mb-4">Select Your Ingredients</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {% for category, items in ingredients.items() %}
-                <div class="mb-4 bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <label class="block text-gray-700 font-bold mb-3 capitalize flex items-center">
+                <div class="mb-4 bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-700">
+                    <label class="block text-gray-200 font-bold mb-3 capitalize flex items-center">
                         <span class="text-lg">{{ category.replace('_', ' ') }}</span>
                         <span class="ml-2 text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full" id="{{ category }}-count">0 selected</span>
                     </label>
                     <div class="relative">
-                        <select class="ingredient-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+                        <select class="ingredient-select bg-gray-700 border border-gray-600 text-gray-100 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
                                 data-category="{{ category }}" 
                                 multiple
                                 size="6"
                                 title="Hold Ctrl/Cmd to select multiple ingredients">
                             {% for item in items %}
-                            <option value="{{ item }}" class="p-2 hover:bg-indigo-50 cursor-pointer">{{ item }}</option>
+                            <option value="{{ item }}" class="p-2 hover:bg-indigo-700 cursor-pointer">{{ item }}</option>
                             {% endfor %}
                         </select>
                         <div class="flex justify-end mt-2">
@@ -46,13 +46,13 @@
         </div>
 
         <!-- Dietary Preferences -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
             <h2 class="text-2xl font-semibold mb-4">Dietary Preferences</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {% for pref in dietary_preferences %}
                 <div class="flex items-center">
-                    <input type="checkbox" id="{{ pref }}" value="{{ pref }}" class="dietary-pref w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 rounded focus:ring-indigo-500">
-                    <label for="{{ pref }}" class="ml-2 text-sm font-medium text-gray-900">{{ pref }}</label>
+                    <input type="checkbox" id="{{ pref }}" value="{{ pref }}" class="dietary-pref w-4 h-4 text-indigo-600 bg-gray-700 border-gray-600 rounded focus:ring-indigo-500">
+                    <label for="{{ pref }}" class="ml-2 text-sm font-medium text-gray-200">{{ pref }}</label>
                 </div>
                 {% endfor %}
             </div>
@@ -72,37 +72,37 @@
         </div>
 
         <!-- Recipe Display -->
-        <div id="recipeDisplay" class="hidden bg-white rounded-lg shadow-lg p-6">
+        <div id="recipeDisplay" class="hidden bg-gray-800 rounded-lg shadow-lg p-6">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold text-gray-800" id="recipeName"></h2>
+                <h2 class="text-3xl font-bold text-gray-100" id="recipeName"></h2>
                 <button id="downloadBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
                     <i class="fas fa-download mr-2"></i>Download PDF
                 </button>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-center p-4 bg-gray-700 rounded-lg">
                     <i class="fas fa-clock text-indigo-600 mb-2"></i>
-                    <p class="text-sm text-gray-600">Time</p>
+                    <p class="text-sm text-gray-300">Time</p>
                     <p class="font-semibold" id="recipeTime"></p>
                 </div>
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-center p-4 bg-gray-700 rounded-lg">
                     <i class="fas fa-users text-indigo-600 mb-2"></i>
-                    <p class="text-sm text-gray-600">Servings</p>
+                    <p class="text-sm text-gray-300">Servings</p>
                     <p class="font-semibold" id="recipeServings"></p>
-                    <p class="text-xs text-gray-500" id="recipeServingSize"></p>
-                    <p class="text-xs text-gray-500" id="recipeTotalWeight"></p>
+                    <p class="text-xs text-gray-400" id="recipeServingSize"></p>
+                    <p class="text-xs text-gray-400" id="recipeTotalWeight"></p>
                     <p class="text-xs text-gray-500 italic" id="recipeServingNote"></p>
                 </div>
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-center p-4 bg-gray-700 rounded-lg">
                     <i class="fas fa-euro-sign text-indigo-600 mb-2"></i>
-                    <p class="text-sm text-gray-600">Cost</p>
+                    <p class="text-sm text-gray-300">Cost</p>
                     <p class="font-semibold" id="recipeCost"></p>
-                    <p class="text-xs text-gray-500" id="recipeCostLevel"></p>
+                    <p class="text-xs text-gray-400" id="recipeCostLevel"></p>
                 </div>
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-center p-4 bg-gray-700 rounded-lg">
                     <i class="fas fa-euro-sign text-indigo-600 mb-2"></i>
-                    <p class="text-sm text-gray-600">Cost per Serving</p>
+                    <p class="text-sm text-gray-300">Cost per Serving</p>
                     <p class="font-semibold" id="recipeCostPerServing"></p>
                 </div>
             </div>
@@ -116,24 +116,24 @@
                 <div>
                     <h3 class="text-xl font-semibold mb-4">Nutritional Information Per Serving</h3>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Calories</p>
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <p class="text-sm text-gray-300">Calories</p>
                             <p class="font-semibold" id="recipeCalories"></p>
                         </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Protein</p>
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <p class="text-sm text-gray-300">Protein</p>
                             <p class="font-semibold" id="recipeProtein"></p>
                         </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Carbs</p>
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <p class="text-sm text-gray-300">Carbs</p>
                             <p class="font-semibold" id="recipeCarbs"></p>
                         </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Fat</p>
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <p class="text-sm text-gray-300">Fat</p>
                             <p class="font-semibold" id="recipeFat"></p>
                         </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-600">Fiber</p>
+                        <div class="p-3 bg-gray-700 rounded-lg">
+                            <p class="text-sm text-gray-300">Fiber</p>
                             <p class="font-semibold" id="recipeFiber"></p>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
 
             <div class="mt-8">
                 <h3 class="text-xl font-semibold mb-4">Cooking Tips</h3>
-                <p id="recipeTips" class="text-gray-700"></p>
+                <p id="recipeTips" class="text-gray-300"></p>
             </div>
 
             <div id="difficultyContainer" class="mt-8" style="display: none;">
