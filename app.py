@@ -264,11 +264,12 @@ def generate_recipe():
     
     IMPORTANT REQUIREMENTS:
     1. Analyze the recipe for common allergens (milk, eggs, fish, shellfish, tree nuts, peanuts, wheat, soybeans) and list them.
-    2. Provide detailed nutritional information including:
-       - Sugar, sodium, cholesterol content
-       - Vitamins (A, C, D, E, K)
-       - Minerals (calcium, iron, potassium, magnesium)
-       Make the values realistic but they don't need to be exact.
+    2. Provide detailed nutritional information with EXACT values per serving:
+       - Protein, carbs, fat, and fiber in grams
+       - Sugar in grams, sodium in mg, cholesterol in mg
+       - Vitamins in proper units (A, D, K in mcg; C, E in mg)
+       - Minerals in mg (calcium, iron, potassium, magnesium)
+       All values must be specific amounts, not percentages of daily value.
     
     For beverage pairings:
     1. Suggest 2-3 alcoholic beverages that complement the dish's flavors
@@ -361,15 +362,15 @@ def generate_recipe():
                 "Sugar": "XX g",
                 "Sodium": "XXX mg",
                 "Cholesterol": "XX mg",
-                "Vitamin A": "XX% DV",
-                "Vitamin C": "XX% DV",
-                "Vitamin D": "XX% DV",
-                "Vitamin E": "XX% DV",
-                "Vitamin K": "XX% DV",
-                "Calcium": "XX% DV",
-                "Iron": "XX% DV",
-                "Potassium": "XX% DV",
-                "Magnesium": "XX% DV"
+                "Vitamin A": "XX mcg",
+                "Vitamin C": "XX mg",
+                "Vitamin D": "XX mcg",
+                "Vitamin E": "XX mg",
+                "Vitamin K": "XX mcg",
+                "Calcium": "XX mg",
+                "Iron": "XX mg",
+                "Potassium": "XX mg",
+                "Magnesium": "XX mg"
             }}
         }},
         "cooking_tips": "Helpful cooking tips and suggestions (use metric measurements: g, ml, cm, °C)",
