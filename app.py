@@ -59,45 +59,71 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 INGREDIENTS = {
     'meat': [
         '🥩 Beef', '🍗 Chicken', '🐷 Pork', '🐟 Fish', '🦃 Turkey', '🦆 Duck',
-        '🐑 Lamb', '🦐 Shrimp', '🦀 Crab', '🐙 Octopus', '🦑 Squid', '🐠 Salmon'
+        '🐑 Lamb', '🦐 Shrimp', '🦀 Crab', '🐙 Octopus', '🦑 Squid', '🐠 Salmon',
+        '🦞 Lobster', '🐠 Tuna', '🐟 Cod', '🐟 Trout', '🦪 Oysters', '🦪 Mussels',
+        '🐠 Sea Bass', '🐟 Halibut'
     ],
     'vegetables': [
         '🥕 Carrot', '🥦 Broccoli', '🍅 Tomato', '🥬 Lettuce', '🫑 Bell Pepper',
         '🧅 Onion', '🥒 Cucumber', '🍆 Eggplant', '🥔 Potato', '🍠 Sweet Potato',
         '🥗 Spinach', '🥬 Kale', '🌽 Corn', '🥜 Peanuts', '🫘 Beans', '🥜 Chickpeas',
-        '🥦 Cauliflower', '🥬 Cabbage', '🍄 Mushroom', '🥝 Zucchini'
+        '🥦 Cauliflower', '🥬 Cabbage', '🍄 Mushroom', '🥝 Zucchini',
+        '🥬 Swiss Chard', '🥬 Collard Greens', '🥬 Arugula', '🥕 Beets',
+        '🧅 Leeks', '🥬 Watercress', '🥬 Endive', '🥕 Parsnips',
+        '🥬 Radicchio', '🥬 Mustard Greens'
     ],
     'spices': [
         '🌶️ Chili', '🧄 Garlic', '🌿 Basil', '🌱 Oregano', '🍃 Thyme',
         '🧂 Salt', '⚫ Black Pepper', '🟡 Turmeric', '🟤 Cinnamon', '🟡 Ginger',
         '🟤 Cumin', '🟡 Curry Powder', '🔴 Paprika', '🟡 Saffron', '🌿 Rosemary',
-        '🌿 Sage', '🌿 Mint', '🌶️ Cayenne', '⭐ Star Anise', '🟤 Nutmeg'
+        '🌿 Sage', '🌿 Mint', '🌶️ Cayenne', '⭐ Star Anise', '🟤 Nutmeg',
+        '🟤 Cardamom', '🟤 Cloves', '🟡 Coriander', '🟡 Fenugreek', '🌶️ Szechuan Pepper',
+        '🟤 Allspice', '🟡 Mustard Seeds', '🟤 Caraway', '🟡 Sumac', '🌶️ Wasabi'
     ],
     'grains': [
         '🍚 Rice', '🍝 Pasta', '🥖 Bread', '🌽 Corn', '🥣 Quinoa',
         '🥯 Bagel', '🥨 Pretzel', '🥜 Oats', '🌾 Barley', '🌾 Rye',
-        '🥖 Sourdough', '🍝 Noodles', '🌾 Couscous', '🌾 Buckwheat', '🌾 Millet'
+        '🥖 Sourdough', '🍝 Noodles', '🌾 Couscous', '🌾 Buckwheat', '🌾 Millet',
+        '🌾 Amaranth', '🌾 Teff', '🌾 Sorghum', '🌾 Wild Rice', '🌾 Spelt',
+        '🌾 Kamut', '🌾 Farro', '🍝 Orzo', '🌾 Triticale', '🥖 Pita'
     ],
     'dairy': [
         '🥛 Milk', '🧀 Cheese', '🧈 Butter', '🥛 Yogurt', '🥛 Cream',
-        '🧀 Mozzarella', '🧀 Cheddar', '🧀 Parmesan', '🧀 Feta', '🥛 Sour Cream'
+        '🧀 Mozzarella', '🧀 Cheddar', '🧀 Parmesan', '🧀 Feta', '🥛 Sour Cream',
+        '🧀 Brie', '🧀 Gouda', '🧀 Blue Cheese', '🧀 Ricotta', '🧀 Mascarpone',
+        '🧀 Provolone', '🧀 Gruyere', '🧀 Camembert', '🥛 Kefir', '🧀 Halloumi'
     ],
     'fruits': [
         '🍎 Apple', '🍌 Banana', '🍊 Orange', '🍇 Grapes', '🍓 Strawberry',
         '🫐 Blueberry', '🥝 Kiwi', '🍍 Pineapple', '🥭 Mango', '🍑 Peach',
-        '🍐 Pear', '🍒 Cherry', '🥥 Coconut', '🫐 Raspberry', '🍇 Blackberry'
+        '🍐 Pear', '🍒 Cherry', '🥥 Coconut', '🫐 Raspberry', '🍇 Blackberry',
+        '🍊 Tangerine', '🍊 Clementine', '🥝 Dragon Fruit', '🍈 Cantaloupe', '🍈 Honeydew',
+        '🍇 Plum', '🥭 Papaya', '🍊 Grapefruit', '🍇 Pomegranate', '🍑 Apricot'
     ],
     'herbs': [
         '🌿 Parsley', '🌿 Cilantro', '🌿 Dill', '🌿 Chives', '🌿 Tarragon',
-        '🌿 Lemongrass', '🌿 Bay Leaf', '🌿 Marjoram', '🌿 Fennel', '🌿 Lavender'
+        '🌿 Lemongrass', '🌿 Bay Leaf', '🌿 Marjoram', '🌿 Fennel', '🌿 Lavender',
+        '🌿 Sorrel', '🌿 Borage', '🌿 Lovage', '🌿 Savory', '🌿 Hyssop',
+        '🌿 Epazote', '🌿 Shiso', '🌿 Angelica', '🌿 Lemon Verbena', '🌿 Thai Basil'
     ],
     'nuts_seeds': [
         '🥜 Almonds', '🥜 Walnuts', '🥜 Cashews', '🌰 Hazelnuts', '🥜 Pistachios',
-        '🌱 Chia Seeds', '🌱 Flax Seeds', '🌱 Sunflower Seeds', '🌱 Pumpkin Seeds', '🥜 Pine Nuts'
+        '🌱 Chia Seeds', '🌱 Flax Seeds', '🌱 Sunflower Seeds', '🌱 Pumpkin Seeds', '🥜 Pine Nuts',
+        '🥜 Macadamia', '🥜 Pecans', '🌱 Hemp Seeds', '🌱 Sesame Seeds', '🥜 Brazil Nuts',
+        '🌱 Poppy Seeds', '🥜 Chestnuts', '🌱 Quinoa Seeds', '🌱 Amaranth Seeds', '🌱 Watermelon Seeds'
     ],
     'condiments': [
         '🥫 Ketchup', '🟡 Mustard', '🥫 Mayo', '🫒 Olive Oil', '🥢 Soy Sauce',
-        '🍯 Honey', '🧂 Vinegar', '🥫 Hot Sauce', '🥫 BBQ Sauce', '🥫 Worcestershire'
+        '🍯 Honey', '🧂 Vinegar', '🥫 Hot Sauce', '🥫 BBQ Sauce', '🥫 Worcestershire',
+        '🫒 Sesame Oil', '🥫 Fish Sauce', '🥫 Oyster Sauce', '🥫 Hoisin Sauce', '🥫 Teriyaki Sauce',
+        '🫒 Avocado Oil', '🫒 Coconut Oil', '🥫 Sriracha', '🥫 Tahini', '🥫 Miso Paste'
+    ],
+    'sweeteners': [
+        '🍫 Dark Chocolate', '🍫 Milk Chocolate', '🍫 White Chocolate', '🌸 Vanilla Bean', '🌸 Vanilla Extract',
+        '🍯 Maple Syrup', '🍯 Agave Nectar', '🧂 Brown Sugar', '🧂 White Sugar', '🧂 Powdered Sugar',
+        '🍯 Molasses', '🥥 Coconut Sugar', '🍯 Date Syrup', '🧂 Stevia', '🧂 Monk Fruit',
+        '🍯 Rice Syrup', '🍯 Barley Malt', '🌺 Rose Water', '🌸 Orange Blossom Water', '🍫 Cocoa Powder',
+        '🍫 Cacao Nibs', '🌸 Almond Extract', '🌸 Mint Extract', '🌸 Rum Extract', '🍯 Caramel Sauce'
     ]
 }
 
