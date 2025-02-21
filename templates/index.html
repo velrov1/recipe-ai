@@ -244,8 +244,7 @@
 
     <!-- Audio for timer completion -->
     <audio id="timerSound" preload="auto">
-        <source src="{{ url_for('static', filename='sounds/timer-complete.mp3') }}" type="audio/mpeg">
-        <source src="{{ url_for('static', filename='sounds/timer-complete.ogg') }}" type="audio/ogg">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -369,18 +368,23 @@
                     
                     // Play sound notification
                     const timerSound = document.getElementById('timerSound');
+                    // Create a new Audio object for each play to avoid any loading issues
+                    const sound = new Audio(timerSound.querySelector('source').src);
+                    sound.volume = 0.5; // Set volume to 50%
+                    
+                    // Play the sound
+                    sound.play().catch(error => {
+                        console.error('Error playing sound:', error);
+                    });
+                    
+                    // Also try playing the original audio element as backup
                     try {
-                        // Reset the audio to the beginning
                         timerSound.currentTime = 0;
-                        // Play the sound
-                        const playPromise = timerSound.play();
-                        if (playPromise !== undefined) {
-                            playPromise.catch(error => {
-                                console.log('Audio playback failed:', error);
-                            });
-                        }
+                        timerSound.play().catch(error => {
+                            console.error('Backup audio playback failed:', error);
+                        });
                     } catch (error) {
-                        console.log('Audio playback error:', error);
+                        console.error('Backup audio error:', error);
                     }
 
                     // Create notification
