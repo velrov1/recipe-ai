@@ -611,9 +611,4 @@ def download_recipe():
     return send_file(filepath, as_attachment=True, download_name=f"{recipe_data['name'].lower().replace(' ', '_')}.pdf")
 
 if __name__ == '__main__':
-    debug_mode = os.getenv('FLASK_DEBUG', '0') == '1'
-    app.run(
-        host=os.getenv('HOST', '0.0.0.0'),
-        port=int(os.getenv('PORT', 3000)),
-        debug=debug_mode
-    )
+    app.run(host='0.0.0.0', port=5000)
