@@ -1,0 +1,2185 @@
+/* Theme CSS for RecipAI - Enhanced Modern UI */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Light theme variables (default) - Enhanced color palette */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent-primary: #6d28d9;
+  --accent-secondary: #8b5cf6;
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --input-bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --header-gradient-from: #15803d;
+  --header-gradient-to: #4ade80;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --info-color: #3b82f6;
+
+/* Dark theme variables - Enhanced for better contrast and visual appeal */
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --accent-primary: #a855f7;
+  --accent-secondary: #c084fc;
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --input-bg: #334155;
+  --card-bg: #1e293b;
+  --header-gradient-from: #065f46;
+  --header-gradient-to: #34d399;
+  --success-color: #34d399;
+  --warning-color: #fbbf24;
+  --error-color: #f87171;
+  --info-color: #60a5fa;
+}
+
+/* Apply theme variables */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header styling */
+header {
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 70%);
+  z-index: -1;
+  animation: pulse 15s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+header h1 {
+  background-image: linear-gradient(to right, var(--header-gradient-from), var(--header-gradient-to));
+  letter-spacing: -0.5px;
+}
+
+/* Card styling */
+.bg-white, .card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Text colors */
+.text-gray-600, .text-gray-700, .text-gray-800, .text-gray-900 {
+  color: var(--text-secondary) !important;
+}
+
+/* Dark mode text colors */
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-700,
+[data-theme="dark"] .text-gray-800,
+[data-theme="dark"] .text-gray-900 {
+  color: var(--text-secondary) !important;
+}
+
+/* Unit Conversion Section */
+[data-theme="dark"] #conversionResult {
+  color: var(--accent-primary) !important;
+}
+
+/* Allergen Warning Section */
+[data-theme="dark"] #allergenWarnings .text-red-800 {
+  color: #fca5a5 !important;
+}
+
+[data-theme="dark"] #allergenWarnings .text-red-700 {
+  color: #fca5a5 !important;
+}
+
+#allergenWarnings {
+  transition: all 0.3s ease;
+}
+
+#allergenWarnings .border-red-500 {
+  border-width: 3px;
+}
+
+#allergenWarnings:not(.hidden) {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Input styling */
+input, select, textarea {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* Button styling */
+.bg-indigo-600 {
+  background-color: var(--accent-primary);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-indigo-700:hover, .bg-indigo-600:hover {
+  background-color: var(--accent-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+button:active::after {
+  opacity: 0.3;
+  transform: scale(50, 50) translate(-50%, -50%);
+  transition: transform 0.5s, opacity 1s;
+}
+
+/* Improve form elements */
+input, select, textarea {
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  outline: none;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px var(--shadow-color);
+}
+
+/* Footer styling */
+footer {
+  border-color: var(--border-color) !important;
+  background-color: var(--bg-secondary);
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+footer a {
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+footer a:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent-primary);
+  transition: width 0.3s ease;
+}
+
+footer a:hover:after {
+  width: 100%;
+}
+
+/* Accessibility improvements */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Improve scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-secondary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Additional UI improvements */
+.rounded-lg {
+  border-radius: 0.75rem;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
+}
+
+/* Add subtle animations to interactive elements */
+button, select, .ingredient-select, a {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover, select:hover, a:hover {
+  transform: translateY(-2px);
+}
+
+/* Enhance recipe display section */
+#recipeDisplay {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#recipeDisplay:not(.hidden) {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Improve cooking guide steps */
+#cookingGuide > div {
+  border-left: 3px solid var(--accent-primary);
+  transition: all 0.3s ease;
+  position: relative;
+  padding-left: 1.5rem !important;
+}
+
+#cookingGuide > div::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  transition: all 0.3s ease;
+}
+
+#cookingGuide > div:hover {
+  border-left-color: var(--accent-secondary);
+  transform: translateX(5px);
+}
+
+#cookingGuide > div:hover::before {
+  background-color: var(--accent-secondary);
+  transform: scale(1.2);
+}
+
+/* Enhance nutritional information display */
+#recipeCalories {
+  font-size: 2.5rem;
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: -1px;
+  position: relative;
+}
+
+#recipeCalories::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  border-radius: 3px;
+  transform: scaleX(0.7);
+  transform-origin: left;
+  opacity: 0.7;
+}
+
+/* Improve spacing and readability */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Add blob animation for header background */
+@keyframes blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; }
+  75% { border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%; }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Enhance ingredient selection */
+.ingredient-select option {
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-select option:checked {
+  background-color: var(--accent-primary) !important;
+  color: white;
+}
+
+/* Enhance form controls */
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+/* Add subtle animations to recipe display */
+#recipeDisplay:not(.hidden) {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhance nutritional info display */
+#detailedNutrients > div {
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#detailedNutrients > div:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(5px);
+}
+
+/* Enhance recipe ingredients list */
+#recipeIngredients li {
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+#recipeIngredients li:hover {
+  transform: translateX(5px);
+  color: var(--accent-primary);
+}
+
+/* Add subtle hover effect to all buttons */
+button:not(.theme-toggle) {
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(.theme-toggle)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:not(.theme-toggle):hover::before {
+  left: 100%;
+}
+
+/* Add more padding to content sections */
+.p-6 {
+  padding: 2rem !important;
+}
+
+/* Improve spacing between sections */
+.mb-8 {
+  margin-bottom: 3rem !important;
+}
+
+/* Add glass morphism effect to certain elements */
+.bg-gray-50, .bg-indigo-50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bg-gray-50:hover, .bg-indigo-50:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .bg-gray-50, [data-theme="dark"] .bg-indigo-50 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance text readability */
+p, li {
+  line-height: 1.7;
+}
+
+/* Enhance card styling */
+.card, .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px var(--shadow-color);
+  border-color: var(--accent-secondary);
+}
+
+.card::after, .bg-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover::after, .bg-white:hover::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .card::after, [data-theme="dark"] .bg-white::after {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+}
+
+/* Improve ingredient selection cards */
+.ingredient-select {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.ingredient-select option:hover {
+  background-color: var(--accent-secondary);
+  color: white;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem !important;
+  }
+  
+  .w-20 {
+    width: 4rem !important;
+  }
+  
+  .h-20 {
+    height: 4rem !important;
+  }
+}
+
+/* Add loading

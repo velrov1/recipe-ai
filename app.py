@@ -141,8 +141,8 @@ INGREDIENTS = {
         '🥩 Beef', '🍗 Chicken', '🐷 Pork', '🐟 Fish', '🦃 Turkey', '🦆 Duck',
         '🐑 Lamb', '🦐 Shrimp', '🦀 Crab', '🐙 Octopus', '🦑 Squid', '🐠 Salmon',
         '🦞 Lobster', '🐠 Tuna', '🐟 Cod', '🐟 Trout', '🦪 Oysters', '🦪 Mussels',
-        '🥓 Bacon', '🦃 Turkey Bacon', '🥩 Veal', '🐑 Mutton',
-        '🐠 Sea Bass', '🐟 Halibut'
+        '🥓 Bacon', '🥩 Veal', '🐑 Mutton', '🌭 Sausage', '🌭 Chorizo', '🌭 Bratwurst',
+        '🐠 Sea Bass', '🐟 Halibut', '🌭 Salami', '🌭 Pepperoni', '🌭 Hot Dog', '🐟 Tilapia'
     ],
     'vegetables': [
         '🥕 Carrot', '🥦 Broccoli', '🍅 Tomato', '🥬 Lettuce', '🫑 Bell Pepper',
